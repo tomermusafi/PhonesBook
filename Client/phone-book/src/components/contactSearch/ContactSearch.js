@@ -40,6 +40,7 @@ function ContactSearch({popupController, dataHasChanged}){
                   Address
                   Name
                   getContactPhones{
+                    Id
                     Phone
                   }
                 }

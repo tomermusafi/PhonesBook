@@ -10,7 +10,7 @@ export class Phone {
     Id: number
     
     @Column()
-    @Field()
+    @Field({nullable: true})
     Phone : String
 
     @Column()

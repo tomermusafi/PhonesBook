@@ -18,31 +18,29 @@ export class ContactsService {
     return from(this.contactRepository.save(convertContactName(newContact)));
   }
 
-  findAll(take: number = 5, skip: number = 0): Observable<Contact[]> {
+  async findAll(take: number = 5, skip: number = 0): Promise<Contact[]> {
     take = take > 5 || take < 0 ? 5 : take;
     skip = skip >= 0 ? skip : 0;
     skip *= take;
-    return from(
-      this.contactRepository
+    return await this.contactRepository
         .createQueryBuilder('contact')
         .orderBy('contact.Name', 'DESC')
         .take(take)
         .skip(skip)
-        .getMany()
-    );
+        .getMany();
   }
 
-  findAllLikeName(input: String, take: number = 5, skip: number = 0): Observable<Contact[]>{
+  async findAllLikeName(input: String, take: number = 5, skip: number = 0): Promise<Contact[]>{
     take = take > 5 || take < 0 ? 5 : take;
     skip = skip >= 0 ? skip : 0;
     skip *= take;
-    return from(this.contactRepository
+    return await this.contactRepository
     .createQueryBuilder('contact')
     .where(`LOWER(contact.Name) like LOWER('${input}%')`)
     .orderBy('contact.Name', 'DESC')
     .take(take)
     .skip(skip)
-    .getMany());
+    .getMany();
   }
 
   async findOne(id: number): Promise<Contact> {
@@ -73,7 +71,7 @@ export class ContactsService {
     if(updateContactInput.Photo != null){
       contact.Photo = updateContactInput.Photo;
     }
-    return this.contactRepository.update(id,convertContactName(contact));
+    return await this.contactRepository.update(id,convertContactName(contact));
   }
 
   async remove(id: number): Promise<Contact>{
@@ -81,10 +79,10 @@ export class ContactsService {
     if(contact == null){
       throw new GraphQLError(`Contact with id ${id} does not exist.`);
     }
-    return this.contactRepository.remove(contact);
+    return await this.contactRepository.remove(contact);
   }
 
-  getContactPhones(contactId: number): Promise<Phone[]>{
-    return this.PhoneService.findPhonesByContactId(contactId);
+  async getContactPhones(contactId: number): Promise<Phone[]>{
+    return await this.PhoneService.findPhonesByContactId(contactId);
   }
 }

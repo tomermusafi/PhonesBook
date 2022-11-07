@@ -26,7 +26,7 @@ export class PhonesResolver {
 
   @Mutation(() => Phone)
   updatePhone(@Args('updatePhoneInput') updatePhoneInput: UpdatePhoneInput) {
-    return this.phonesService.update(0, updatePhoneInput);
+    return this.phonesService.update(updatePhoneInput.Id, updatePhoneInput);
   }
 
   @Mutation(() => Phone)

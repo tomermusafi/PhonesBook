@@ -1,6 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import './PopupContact.css'
 import axios from 'axios';
+import PhoneField from '../phoneField/PhoneField';
 
 function PopupContact({show, popupController, methodType, contact, dataHasChanged, setDataHasChanged}){
     const prevImgRef = useRef();
@@ -13,6 +14,7 @@ function PopupContact({show, popupController, methodType, contact, dataHasChange
     const saveResultMessageRef = useRef();
     const showValue = methodType == "UPDATE";
     const URL = `http://localhost:3333/graphql`;
+    const [phonesToDelete, setPhonesToDelete] = useState([]);
 
     const createContactQuery = (FirstName, LastName, Nickname, Address) => {
       return `mutation{
@@ -57,6 +59,28 @@ function PopupContact({show, popupController, methodType, contact, dataHasChange
         }
       }`;
     }
+    const updatePhoneQuery = (id, phoneNumber) =>{
+      return `mutation{
+        updatePhone(updatePhoneInput:{
+          Id: ${id}
+          Phone: "${phoneNumber}"
+        }){
+          Phone
+        }
+      }`;
+    }
+    const deletePhoneQuery = (id) =>{
+      return `mutation{
+        removePhone(id:${id}){
+          Phone
+        }
+      }`;
+    }
+    
+    const handleDeletedPhones = (id) =>{
+      phonesToDelete.push(id);
+      setPhonesToDelete(phonesToDelete);
+    }
     const onInputImgChange = (event) => {
       const [file] = event.target.files
       if (file) {
@@ -64,7 +88,9 @@ function PopupContact({show, popupController, methodType, contact, dataHasChange
       }
     }
     const removePhoneElement = (event) =>{
+      debugger
       event.target.parentNode.remove();
+
     }
     const addPhoneInput = () =>{
       const wrapper = document.createElement("div");
@@ -113,16 +139,82 @@ function PopupContact({show, popupController, methodType, contact, dataHasChange
                     setDataHasChanged(!dataHasChanged);
                   }
                 }).catch((error)=>{
+                  debugger
                     console.log(error);
                 });
               }
                               
          }
         }).catch((error)=>{
+          debugger
           console.log(error);
         });
     }
+    const deletePhones = () =>{
+      debugger;
+      if(phonesToDelete.length > 0){
+        phonesToDelete.map(id =>{
+          axios({
+            url: URL,
+            method: 'post',
+            data: {
+              query: deletePhoneQuery(id)
+            }
+          }).then((result) => {
+            debugger;
+            if(result.data.data == null || (result.data.errors != null && result.data.errors.length > 0)){
+                  saveResultMessageRef.current.className = 'visible';
+                  saveResultMessageRef.current.style.color = 'red';
+                  saveResultMessageRef.current.innerHTML = 'Faild to update';
+                  setTimeout(()=>{saveResultMessageRef.current.className = 'hidden';},1000);
+            }
+            else{
+              popupController(false, "UPDATE");
+              setDataHasChanged(!dataHasChanged);
+            }
+          }).catch((error) =>{
+            debugger
+            console.log(error)
+          })
+        })
+        
+      }
+    }
+    const updatePhone = (id, phoneNumber) =>{
+      if(isNaN(id)){
+        
+      }
+          axios({
+            url: URL,
+            method: 'post',
+            data: {
+              query: updatePhoneQuery(id, phoneNumber)
+            }
+          }).then((result) => {
+            if(result.data.data == null || (result.data.errors != null && result.data.errors.length > 0)){
+                  saveResultMessageRef.current.className = 'visible';
+                  saveResultMessageRef.current.style.color = 'red';
+                  saveResultMessageRef.current.innerHTML = 'Faild to update';
+                  setTimeout(()=>{saveResultMessageRef.current.className = 'hidden';},1000);
+            }
+            else{
+              popupController(false, "UPDATE");
+              setDataHasChanged(!dataHasChanged);
+            }
+          }).catch((error) =>{
+            debugger
+            console.log(error)
+          })
+    }
     const onContactUpdate = () =>{
+
+      deletePhones();
+      debugger;
+      Array.from(phoneList.current.children).map(child => {
+        return [parseInt(child.children[0].id),child.children[0].value]}).map(phone =>{
+        updatePhone(phone[0], phone[1]);
+      });
+
       let FirstName = firstNameRef.current.value;
       let LastName = lastNameRef.current.value;
       let Nickname = nicknameRef.current.value;
@@ -145,6 +237,7 @@ function PopupContact({show, popupController, methodType, contact, dataHasChange
           setDataHasChanged(!dataHasChanged);
         }
       }).catch((error) =>{
+        debugger;
         console.log(error)
       })
     }
@@ -167,6 +260,7 @@ function PopupContact({show, popupController, methodType, contact, dataHasChange
           setDataHasChanged(!dataHasChanged);
         }
       }).catch((error) =>{
+        debugger;
         console.log(error)
       })
     }
@@ -199,23 +293,11 @@ function PopupContact({show, popupController, methodType, contact, dataHasChange
                 <div className='phones field'>
                     <label>Phones:</label>
                     <div ref={phoneList} >
-                      <div className='phone'>
-                        <input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" 
-                        defaultValue={(showValue && 
-                        contact != null &&
-                        contact.getContactPhones != null && 
-                        contact.getContactPhones.length > 0) ?
-                        contact.getContactPhones[0].Phone : ""}>
-                        </input>
-                      </div>
+                    <PhoneField contact={contact} removable={false} showValue={showValue}></PhoneField>
                       { contact != null && contact.getContactPhones != null && 
-                        contact.getContactPhones.length > 0 &&(contact.getContactPhones.map(c => {
-                          <div className='phone'>
-                            <input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" 
-                        defaultValue={c.Phone}></input>
-                        <div className='minus' onClick={removePhoneElement}>x</div>
-                          </div>
-                        }) )}
+                        contact.getContactPhones.length > 0 &&(contact.getContactPhones.slice(1).map((p,key) => ( 
+                          <PhoneField key={key} contact={contact} phone={p} showValue={showValue} removable={true} handleDeletedPhones={handleDeletedPhones}></PhoneField>
+                       )) )}
                         
                     </div>
                     <div className='add' onClick={addPhoneInput}>+ Add another phone</div>

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GraphQLError } from 'graphql';
 import { ContactsService } from 'src/contacts/contacts.service';
 import { Contact } from 'src/contacts/entities/contact.entity';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { CreatePhoneInput } from './dto/create-phone.input';
 import { UpdatePhoneInput } from './dto/update-phone.input';
 import { Phone } from './entities/phone.entity';
@@ -12,16 +12,16 @@ import { Phone } from './entities/phone.entity';
 export class PhonesService {
   constructor(@InjectRepository(Phone) private phonesRepository: Repository<Phone>){}
 
-  create(createPhoneInput: CreatePhoneInput): Promise<Phone> {
-    return this.phonesRepository.save(createPhoneInput);
+  async create(createPhoneInput: CreatePhoneInput): Promise<Phone> {
+    return await this.phonesRepository.save(createPhoneInput);
   }
 
-  findAll(): Promise<Phone[]> {
-    return this.phonesRepository.find();
+  async findAll(): Promise<Phone[]> {
+    return await this.phonesRepository.find();
   }
 
-  findPhonesByContactId(contactId: number): Promise<Phone[]>{
-    return this.phonesRepository.findBy({ContactId: contactId});
+  async findPhonesByContactId(contactId: number): Promise<Phone[]>{
+    return await this.phonesRepository.findBy({ContactId: contactId});
   }
 
    async findOne(id: number): Promise<Phone> {
@@ -40,7 +40,7 @@ export class PhonesService {
     if(updatePhoneInput.Phone != null){
       phone.Phone = updatePhoneInput.Phone;
     }
-    return this.phonesRepository.update(id,phone);
+    return await this.phonesRepository.update(id,phone);
   }
 
   async remove(id: number): Promise<Phone> {
@@ -48,7 +48,6 @@ export class PhonesService {
     if(phone == null){
       throw new GraphQLError(`Phone with id ${id} does not exist.`);
     }
-    return this.phonesRepository.remove(phone);
+    return await this.phonesRepository.remove(phone);
   }
- 
 }

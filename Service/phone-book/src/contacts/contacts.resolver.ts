@@ -19,7 +19,7 @@ export class ContactsResolver {
   @Query(() => [Contact], { name: 'allContacts' })
   findAll(
     @Args('take', { type: () => Int }) take: number, 
-    @Args('skip', { type: () => Int }) skip: number): Observable<Contact[]> {
+    @Args('skip', { type: () => Int }) skip: number): Promise<Contact[]> {
     return this.contactsService.findAll(take, skip);
   }
   @Query(() => [Contact], { name: 'contacts' })
@@ -27,7 +27,7 @@ export class ContactsResolver {
     @Args('input') input: String,
     @Args('take', { type: () => Int }) take: number, 
     @Args('skip', { type: () => Int }) skip: number
-  ): Observable<Contact[]>{
+  ): Promise<Contact[]>{
     return this.contactsService.findAllLikeName(input, take, skip);
   }
   @Query(() => Contact, { name: 'contact' })

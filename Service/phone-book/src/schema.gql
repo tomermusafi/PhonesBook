@@ -16,7 +16,7 @@ type Contact {
 
 type Phone {
   Id: Int!
-  Phone: String!
+  Phone: String
   ContactId: Int!
   Contact: Contact!
 }
@@ -61,6 +61,7 @@ input CreatePhoneInput {
 }
 
 input UpdatePhoneInput {
-  Phone: String!
-  ContactId: Int!
+  Phone: String
+  ContactId: Int
+  Id: Int!
 }
