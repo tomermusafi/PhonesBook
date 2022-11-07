@@ -1,0 +1,66 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Contact {
+  Id: Int!
+  FirstName: String!
+  LastName: String!
+  Nickname: String!
+  Name: String
+  Address: String
+  Photo: String
+  Phones: [Phone!]
+  getContactPhones: [Phone!]!
+}
+
+type Phone {
+  Id: Int!
+  Phone: String!
+  ContactId: Int!
+  Contact: Contact!
+}
+
+type Query {
+  allContacts(take: Int!, skip: Int!): [Contact!]!
+  contacts(input: String!, take: Int!, skip: Int!): [Contact!]!
+  contact(id: Int!): Contact!
+  phones: [Phone!]!
+  phone(id: Int!): Phone!
+}
+
+type Mutation {
+  createContact(createContactInput: CreateContactInput!): Contact!
+  updateContact(updateContactInput: UpdateContactInput!): Contact!
+  removeContact(id: Int!): Contact!
+  createPhone(createPhoneInput: CreatePhoneInput!): Phone!
+  updatePhone(updatePhoneInput: UpdatePhoneInput!): Phone!
+  removePhone(id: Int!): Phone!
+}
+
+input CreateContactInput {
+  FirstName: String
+  LastName: String
+  Nickname: String
+  Address: String
+  Photo: String
+}
+
+input UpdateContactInput {
+  FirstName: String!
+  LastName: String!
+  Nickname: String!
+  Address: String!
+  Photo: String!
+  Id: Int!
+}
+
+input CreatePhoneInput {
+  Phone: String!
+  ContactId: Int!
+}
+
+input UpdatePhoneInput {
+  Phone: String!
+  ContactId: Int!
+}

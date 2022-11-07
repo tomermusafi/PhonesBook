@@ -1,0 +1,14 @@
+.contactList{
+    display: flex;
+    justify-content: center;
+}
+.contacts{
+    border: 2px solid gainsboro;
+    border-radius: 0.5em;
+    max-height: 41.5em;
+    overflow-y: auto;
+}
+.loading{
+    color: #a09797;
+    font-size: 1.5em;
+}

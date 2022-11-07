@@ -1,0 +1,10 @@
+{
+  "short_name": "Phone Book",
+  "name": "Phone Book App",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

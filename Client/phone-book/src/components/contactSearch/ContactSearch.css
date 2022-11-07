@@ -1,0 +1,33 @@
+.contactSearch{
+    margin: auto;
+}
+.contactSearch input{
+    width: 20em;
+    background: aliceblue;
+    margin: 10px 0;
+    font-size: 16px;
+    padding: 0.5em;
+    border: 2px solid gainsboro;
+    border-radius: 1em;
+    vertical-align: middle;
+}
+
+input:focus {
+    outline: none;
+}
+
+.contactList{
+    display: flex;
+    justify-content: center;
+}
+.contacts{
+    border: 2px solid gainsboro;
+    border-radius: 0.5em;
+    max-height: 20em;
+    overflow-y: auto;
+}
+.loading{
+    color: #a09797;
+    font-size: 1.5em;
+    cursor: pointer;
+}
