@@ -3,7 +3,6 @@ import { PhonesService } from './phones.service';
 import { Phone } from './entities/phone.entity';
 import { CreatePhoneInput } from './dto/create-phone.input';
 import { UpdatePhoneInput } from './dto/update-phone.input';
-import { Contact } from 'src/contacts/entities/contact.entity';
 
 @Resolver(() => Phone)
 export class PhonesResolver {

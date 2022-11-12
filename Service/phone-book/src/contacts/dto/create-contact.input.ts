@@ -1,5 +1,4 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { Phone } from 'src/phones/entities/phone.entity';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateContactInput {

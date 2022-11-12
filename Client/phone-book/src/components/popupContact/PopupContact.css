@@ -1,4 +1,4 @@
-.popup{
+.popup {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.popup-inner{
+.popup-inner {
     position: relative;
     padding: 1em;
     width: 100%;
@@ -22,29 +22,32 @@
     overflow-y: auto;
 }
 
-img{
+img {
     width: 3em;
     height: 3em;
     border-radius: 50%;
 
 }
-.phones{
+
+.phones {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.phone{
+
+.phone {
     display: flex;
     flex-direction: row;
     margin-bottom: 0.2em;
 }
-.fieldsWrapper{
+
+.fieldsWrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.field{
+.field {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -59,36 +62,36 @@ img{
     width: 14em;
 }
 
-label{
+label {
     font-size: 14px;
     font-weight: 600;
 }
 
-.saveResultMessage{
+.saveResultMessage {
     visibility: hidden;
     font-weight: bold;
 }
 
-.minus, .add{
+.minus,
+.add {
     margin-inline: 0.2em;
     cursor: pointer;
 }
-.minus:hover, .add:hover, .closeBtn:hover{
+
+.minus:hover,
+.add:hover,
+.closeBtn:hover {
     font-weight: bold;
 }
-.closeBtn{
+
+.closeBtn {
     position: absolute;
     right: 1em;
     cursor: pointer;
 }
+
 .visible {
     visibility: visible;
     opacity: 1;
-    transition: opacity 1s linear;
-  }
-
-  .hidden {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 2s, opacity 2s linear;
-  }
+    transition: opacity 2s linear;
+}
