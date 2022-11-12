@@ -1,7 +1,8 @@
-.contactSearch{
+.contactSearch {
     margin: auto;
 }
-.contactSearch input{
+
+.contactSearch input {
     width: 20em;
     background: aliceblue;
     margin: 10px 0;
@@ -16,18 +17,3 @@ input:focus {
     outline: none;
 }
 
-.contactList{
-    display: flex;
-    justify-content: center;
-}
-.contacts{
-    border: 2px solid gainsboro;
-    border-radius: 0.5em;
-    max-height: 20em;
-    overflow-y: auto;
-}
-.loading{
-    color: #a09797;
-    font-size: 1.5em;
-    cursor: pointer;
-}

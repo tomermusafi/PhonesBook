@@ -1,4 +1,4 @@
-.contact{
+.contact {
     border-bottom: 1px solid gainsboro;
     cursor: pointer;
     width: 20em;
@@ -6,12 +6,14 @@
     display: flex;
     justify-content: start;
 }
-.contactName{
+
+.contactName {
     color: #626262;
     font-weight: bold;
     margin-inline-start: 1em;
 
 }
+
 .contactPhoto {
     border-radius: 50%;
     background: #e2e2e2;

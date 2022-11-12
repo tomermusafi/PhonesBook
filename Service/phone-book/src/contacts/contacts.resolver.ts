@@ -4,7 +4,6 @@ import { Contact } from './entities/contact.entity';
 import { CreateContactInput } from './dto/create-contact.input';
 import { UpdateContactInput } from './dto/update-contact.input';
 import { Observable } from 'rxjs';
-import { DeleteResult } from 'typeorm';
 import { Phone } from 'src/phones/entities/phone.entity';
 
 @Resolver(() => Contact)

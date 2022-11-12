@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GraphQLError } from 'graphql';
-import { ContactsService } from 'src/contacts/contacts.service';
-import { Contact } from 'src/contacts/entities/contact.entity';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreatePhoneInput } from './dto/create-phone.input';
 import { UpdatePhoneInput } from './dto/update-phone.input';
 import { Phone } from './entities/phone.entity';

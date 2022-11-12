@@ -1,5 +1,4 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql"
-import { type } from "os"
 import { Phone } from "src/phones/entities/phone.entity"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
